@@ -25,8 +25,13 @@ public class EquationInfoGetter {
         String url = "https://phuongtrinhhoahoc.com/?chat_tham_gia="+ left + "&chat_san_pham=" + right;
         try {
             this.documentHTMLDemo = Jsoup.connect(url).get();
-            this.mainDocumentHTML = Jsoup.connect(this.getRightURLOfEquation()).get();
-            this.equationDetailDatas = this.getInfoOfEquation(this.mainDocumentHTML);
+            String urlOfEquation = this.getRightURLOfEquation();
+            this.mainDocumentHTML = Jsoup.connect(urlOfEquation).get();
+            if(this.mainDocumentHTML.selectFirst(".bs-callout.bs-callout-primary b").text().equals(urlOfEquation)){
+                this.equationDetailDatas = this.getInfoOfEquation(this.mainDocumentHTML, true);
+            } else {
+                this.equationDetailDatas = this.getInfoOfEquation(this.documentHTMLDemo, false);
+            }
         } catch (IOException ex) {
             this.documentHTMLDemo = null;
         }
@@ -47,16 +52,23 @@ public class EquationInfoGetter {
      * @param doc The Document (JSOUP) of the exactly page for a particular chemical equation (from phuongtrinhhoahoc.com)
      * @return he String standing for DOM Element which contain information of a particular equation
      */
-    private String getInfoOfEquation(Document doc){
-        Element div = doc.selectFirst("div[role=tabpanel]");
-        String innerHTML = div.html();
-        int endIndex = innerHTML.indexOf("Câu hỏi minh họa");
-        // we should delete all the DOM from "Câu hỏi minh họa" and later
-        if(endIndex != -1) {
-            innerHTML = innerHTML.substring(0,endIndex);
-        } 
-        div = div.html(innerHTML);
-        return div.outerHtml();
+    private String getInfoOfEquation(Document doc, boolean usingMainDocument){
+        try{
+            Element div = doc.selectFirst("div[role=tabpanel]");
+            String innerHTML = div.html();
+            int endIndex = (usingMainDocument) ? innerHTML.indexOf("Câu hỏi minh họa") : innerHTML.indexOf("<a");
+            // we should delete all the DOM from "Câu hỏi minh họa" and later
+            if(endIndex != -1) {
+                innerHTML = innerHTML.substring(0,endIndex);
+            } 
+            div = div.html(innerHTML);
+            return div.outerHtml();
+        } catch (NullPointerException ex){
+            return "<div class=\"alert alert-warning\" role=\"alert\">" +
+                        " WARNING !!! This is a chemical equations which can never be done in reality!! Please Check it again" +
+                        "</div>";
+        }
+        
     }
        
     /**

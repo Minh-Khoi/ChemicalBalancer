@@ -41,7 +41,7 @@ export default {
       let formDatas = new FormData();
       formDatas.append("reactants", this.fetchingStringReactant);
       formDatas.append("products", this.fetchingStringProduct);
-      fetch(backendURL + "/balance", {
+      fetch(backendURL + "balance", {
         body: formDatas,
         method: "POST"
       })

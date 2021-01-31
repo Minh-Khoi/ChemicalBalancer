@@ -35,7 +35,7 @@ public class Balancer {
             return (ChemicalEducationBalancer.balance(left + "=" + right).getResult());
         } catch (BalancerException e) {
 //            e.printStackTrace();
-            return "Some thing when wrong. This equation is not available to be getting balance";
+            return "Something when wrong. This equation have no way to be gotten balance";
         }
     }
     
