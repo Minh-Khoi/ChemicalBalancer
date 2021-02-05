@@ -69,8 +69,8 @@ public class Controller extends HttpServlet {
         String products = request.getParameter("products");
         String result = Balancer.getBalancedString(reactants, products);
         String equationInfo = new EquationInfoGetter(reactants, products).getEquationDetailDatas();
-        System.out.println(result + "\n" + equationInfo);
-        return "<h1>" + result + "</h1> \n" + ((result.indexOf("Something went wrong")!=-1) ? "" : equationInfo); 
+        System.out.println(result + "\n" + result.indexOf("Something when wrong"));
+        return "<h1>" + result + "</h1> \n" + ((result.indexOf("Something when wrong")!=-1) ? "" : equationInfo); 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
