@@ -98,6 +98,7 @@ public class Material {
                 JSONObject compound = jSONArrayOfCompounds.getJSONObject(j);
                 if(compound.get("formula").equals(this.formula)){
                     this.setName(compound.getString("vietnamese_name"));
+                    this.setId(compound.getInt("id"));
                     return true;
                 }
             }

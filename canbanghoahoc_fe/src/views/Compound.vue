@@ -9,7 +9,7 @@
     <span class="btn btn-danger" @click="selfDelete">X</span>
 
     <!-- Modal -->
-    <div class="modal fade" :id="'myModal_'+details" role="dialog">
+    <div class="modal fade" :id="'myModal_'+compoundInfo.id" role="dialog">
       <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
@@ -68,7 +68,7 @@ export default {
     showInfo() {
       // console.log(this.isValidCompound);
       if (this.isValidCompound) {
-        window.$("#myModal_" + this.details).modal();
+        window.$("#myModal_" + this.compoundInfo.id).modal();
       }
     }
   },

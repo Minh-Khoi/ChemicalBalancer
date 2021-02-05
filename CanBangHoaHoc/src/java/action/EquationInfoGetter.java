@@ -27,7 +27,9 @@ public class EquationInfoGetter {
             this.documentHTMLDemo = Jsoup.connect(url).get();
             String urlOfEquation = this.getRightURLOfEquation();
             this.mainDocumentHTML = Jsoup.connect(urlOfEquation).get();
-            if(this.mainDocumentHTML.selectFirst(".bs-callout.bs-callout-primary b").text().equals(urlOfEquation)){
+            Element mainDocumentLinkContainer = this.mainDocumentHTML.selectFirst(".bs-callout.bs-callout-primary b");
+            if(mainDocumentLinkContainer ==null || mainDocumentLinkContainer.text().equals(urlOfEquation)){
+//                System.out.println(mainDocumentLinkContainer.text().equals(urlOfEquation));
                 this.equationDetailDatas = this.getInfoOfEquation(this.mainDocumentHTML, true);
             } else {
                 this.equationDetailDatas = this.getInfoOfEquation(this.documentHTMLDemo, false);
@@ -56,8 +58,9 @@ public class EquationInfoGetter {
         try{
             Element div = doc.selectFirst("div[role=tabpanel]");
             String innerHTML = div.html();
-            int endIndex = (usingMainDocument) ? innerHTML.indexOf("Câu hỏi minh họa") : innerHTML.indexOf("<a");
-            // we should delete all the DOM from "Câu hỏi minh họa" and later
+            int endIndex = (usingMainDocument) ? innerHTML.indexOf("<div") : innerHTML.indexOf("<a");
+            System.out.println(usingMainDocument);
+            // we should delete all the DOM from "<div" and later
             if(endIndex != -1) {
                 innerHTML = innerHTML.substring(0,endIndex);
             } 
