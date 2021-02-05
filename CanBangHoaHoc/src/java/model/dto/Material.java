@@ -154,6 +154,7 @@ public class Material {
         JSONObject jSONObject = new JSONObject();
         jSONObject.put("vietnamese_name", this.name);
         jSONObject.put("formula", this.formula);
+        jSONObject.put("id", this.id);
         JSONArray moreInfoJSON = new JSONArray(this.moreInfo);
         jSONObject.put("moreInfo", moreInfoJSON);
         return jSONObject.toString(4);
