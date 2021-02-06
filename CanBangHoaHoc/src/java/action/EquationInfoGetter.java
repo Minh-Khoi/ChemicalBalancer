@@ -25,15 +25,14 @@ public class EquationInfoGetter {
         String url = "https://phuongtrinhhoahoc.com/?chat_tham_gia="+ left + "&chat_san_pham=" + right;
         try {
             this.documentHTMLDemo = Jsoup.connect(url).get();
-            String urlOfEquation = this.getRightURLOfEquation();
+            String urlOfEquation = this.getRightURLOfEquation(); // Sai ở chỗ này chờ fix bug
             this.mainDocumentHTML = Jsoup.connect(urlOfEquation).get();
             Element mainDocumentLinkContainer = this.mainDocumentHTML.selectFirst(".bs-callout.bs-callout-primary b");
-            if(mainDocumentLinkContainer ==null || mainDocumentLinkContainer.text().equals(urlOfEquation)){
-//                System.out.println(mainDocumentLinkContainer.text().equals(urlOfEquation));
-                this.equationDetailDatas = this.getInfoOfEquation(this.mainDocumentHTML, true);
-            } else {
-                this.equationDetailDatas = this.getInfoOfEquation(this.documentHTMLDemo, false);
-            }
+            boolean usingMainDocument = mainDocumentLinkContainer ==null 
+                                            || mainDocumentLinkContainer.text().equals(urlOfEquation)
+                                            || mainDocumentLinkContainer.text().indexOf("http:") == -1;
+            Document datasDocument = (usingMainDocument) ? this.mainDocumentHTML : this.documentHTMLDemo;
+            this.equationDetailDatas = this.getInfoOfEquation(datasDocument, usingMainDocument);
         } catch (IOException ex) {
             this.documentHTMLDemo = null;
         }
