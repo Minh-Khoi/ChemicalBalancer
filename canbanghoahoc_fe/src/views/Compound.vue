@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { backendURL } from "../router/server_route";
+import { backendURL , browser_domain} from "../router/server_route";
 
 export default {
   name: "compound",
@@ -75,7 +75,7 @@ export default {
   async mounted() {
     let formDatas = new FormData();
     formDatas.append("compoundFormula", this.details);
-    formDatas.append("from_domain", "http://localhost:7006");
+    formDatas.append("from_domain", browser_domain);
     fetch(backendURL + "checkcompound", {
       body: formDatas,
       method: "POST"

@@ -31,7 +31,7 @@ import ModalEquationVue from '@/components/ModalEquation.vue';
 import { IonContent, IonHeader, IonTitle, IonToolbar,IonButton,IonItem, modalController} from '@ionic/vue';
 import { defineComponent } from 'vue';
 import Expression from "../components/Expression.vue";
-import {backendURL} from '../router/server_route';
+import {backendURL, device_url} from '../router/server_route';
 import ModalEquation from '../components/ModalEquation.vue';
 
 export default defineComponent({
@@ -66,7 +66,7 @@ export default defineComponent({
       let formDatas = new FormData();
       formDatas.append("reactants", this.fetchingStringReactant);
       formDatas.append("products", this.fetchingStringProduct);
-      formDatas.append("from_domain", "http://localhost:7005");
+      formDatas.append("from_domain", device_url);
       fetch(backendURL + "balance", {
         body: formDatas,
         method: "POST"

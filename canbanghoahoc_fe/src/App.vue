@@ -15,7 +15,7 @@
 
 <script>
 import Expression from "./views/Expression";
-import { backendURL } from "./router/server_route";
+import { backendURL, browser_domain } from "./router/server_route";
 
 export default {
   components: {
@@ -41,7 +41,7 @@ export default {
       let formDatas = new FormData();
       formDatas.append("reactants", this.fetchingStringReactant);
       formDatas.append("products", this.fetchingStringProduct);
-      formDatas.append("from_domain", "http://localhost:7006");
+      formDatas.append("from_domain", browser_domain);
       fetch(backendURL + "balance", {
         body: formDatas,
         method: "POST"
