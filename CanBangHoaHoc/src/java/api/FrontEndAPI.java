@@ -11,5 +11,6 @@ package api;
  */
 public class FrontEndAPI {
     public static String frontendURL = "http://localhost:7006";
-    
+    public static String mobileURL = "http://localhost:7005";
+        
 }

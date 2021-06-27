@@ -22,7 +22,7 @@ public class EquationInfoGetter {
     private Document documentHTMLDemo, mainDocumentHTML;
 
     public EquationInfoGetter(String left , String right) {
-        String url = "https://phuongtrinhhoahoc.com/?chat_tham_gia="+ left + "&chat_san_pham=" + right;
+        String url = "https://chemicalequationbalance.com/?reactant_search="+left+"&product_search="+right;
         try {
             this.documentHTMLDemo = Jsoup.connect(url).get();
             String urlOfEquation = this.getRightURLOfEquation(); // Sai ở chỗ này chờ fix bug
@@ -35,6 +35,7 @@ public class EquationInfoGetter {
             this.equationDetailDatas = this.getInfoOfEquation(datasDocument, usingMainDocument);
         } catch (IOException ex) {
             this.documentHTMLDemo = null;
+            ex.printStackTrace();
         }
     }
     
@@ -43,8 +44,8 @@ public class EquationInfoGetter {
      * @return url link (String instance)
      */
     private String getRightURLOfEquation(){
-        Element linkTag = this.documentHTMLDemo.select("a.left.btn.btn-danger.btn-sm").first();
-        return "https://phuongtrinhhoahoc.com" + linkTag.attr("href");
+        Element linkTag = this.documentHTMLDemo.select("a.left.btn.btn-danger.btn-lg").first();
+        return "https://chemicalequationbalance.com" + linkTag.attr("href");
     }
     
     /**

@@ -75,6 +75,7 @@ export default {
   async mounted() {
     let formDatas = new FormData();
     formDatas.append("compoundFormula", this.details);
+    formDatas.append("from_domain", "http://localhost:7006");
     fetch(backendURL + "checkcompound", {
       body: formDatas,
       method: "POST"

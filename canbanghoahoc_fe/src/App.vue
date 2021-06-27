@@ -1,6 +1,6 @@
 <template>
   <div id="app2">
-    <h1 class="h1 text-center">Cân bằng hóa học</h1>
+    <h1 class="h1 text-center">Chemical equation balancing</h1>
     <expression expressionName="reactant"></expression>
     <h1>===========>>>></h1>
     <expression expressionName="product"></expression>
@@ -8,7 +8,7 @@
     <button
       class="btn btn-block bg-secondary text-light fixed-bottom"
       @click="doBalance()"
-    >TIẾN HÀNH CÂN BẰNG</button>
+    >MAKE THE EQUATIONS BALANCED</button>
     <div class="equation_details" ref="equation_details"></div>
   </div>
 </template>
@@ -41,6 +41,7 @@ export default {
       let formDatas = new FormData();
       formDatas.append("reactants", this.fetchingStringReactant);
       formDatas.append("products", this.fetchingStringProduct);
+      formDatas.append("from_domain", "http://localhost:7006");
       fetch(backendURL + "balance", {
         body: formDatas,
         method: "POST"

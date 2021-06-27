@@ -1,24 +1,28 @@
 <template>
-  <div :class="'expression_'+expressionName">
-    <h3>{{expressionName.toUpperCase()}}</h3>
-    <form action @submit.prevent="onSubmit">
-      <input v-model="compoundInTextarea" />
-      <button type="submit" class="btn btn-info">ADD {{expressionName.toUpperCase()}}</button>
+  <span :class="'expression_'+expressionName">
+    <form action="" @submit.prevent="onSubmit">
+      <ion-item class="box">
+        <ion-label  color="primary">
+          {{expressionName.toUpperCase()}}
+        </ion-label>
+        <ion-input @input="onIonInputEntered($event)" ></ion-input>
+      </ion-item>
     </form>
-    <div class="list_compounds">
-      <span v-for="(compound) in compoundsShowed" :key="compound" :class="compound">
-        <compound :details="compound"></compound>
-      </span>
-    </div>
-  </div>
+    <span v-for="(compound,index) in compoundsShowed" :key="index" :class="compound">
+      <compound :details="compound"></compound>
+      <!-- <span>FUCK</span> -->
+    </span>
+  </span>
 </template>
 
 <script>
 import Compound from "./Compound.vue";
+import {IonInput, IonItem, IonLabel,} from '@ionic/vue';
 
 export default {
   name: "expression",
   props: ["expressionName"],
+  components:{Compound, IonInput, IonItem, IonLabel,},
   data() {
     return {
       expressionToSubmit: "",
@@ -26,14 +30,19 @@ export default {
       compoundsShowed: []
     };
   },
-  components: { Compound },
   methods: {
+    /** when the ion_input Entered */
+    onIonInputEntered(event){
+      this.compoundInTextarea=event.target.value;
+    },
+
     /** Use when complete typing a compound in text area */
     onSubmit() {
       this.compoundsShowed.push(this.compoundInTextarea);
       this.expressionToSubmit = this.compoundsShowed.join("+");
-      // console.log(this.expressionToSubmit);
+      console.log(this.compoundsShowed);
       this.compoundInTextarea = "";
+      document.querySelector(".expression_"+this.expressionName+" ion-input").value = ""
     },
 
     /** Delete one compound from Expression */
@@ -50,15 +59,24 @@ export default {
   watch: {
     /** To update the fetching datas when the Compound Components have changed */
     expressionToSubmit(newData) {
+      console.log(this.$parent)
       this.$parent.updateExpression(this.expressionName, newData);
-      console.log(newData)
+      
     }
   }
-};
+
+}
 </script>
 
 <style scoped>
-input {
-  border: 2px purple solid;
+ion-label{
+  font-weight: 800;
+}
+.box {
+    border-color: #403E39;
+    border-width: thin;
+    border-style: solid;
+    border-radius: 3px;
 }
 </style>
+

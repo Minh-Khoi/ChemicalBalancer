@@ -46,7 +46,8 @@ public class Controller extends HttpServlet {
         // Set property "web.dir" for System, which is the absolute path to the folder "datas"
         System.setProperty("web.dir", request.getServletContext().getRealPath(""));
         response.setContentType("text/html;charset=UTF-8");
-        response.setHeader("Access-Control-Allow-Origin", FrontEndAPI.frontendURL);
+//        String $httpOrigin = request.getServerName().replaceAll(".*\\.(?=.*\\.)", "");
+        response.setHeader("Access-Control-Allow-Origin", request.getParameter("from_domain"));
         response.setCharacterEncoding("UTF-8");
         
         PrintWriter printWriter = response.getWriter();
@@ -67,9 +68,10 @@ public class Controller extends HttpServlet {
     private String doBalance(HttpServletRequest request, HttpServletResponse response){
         String reactants = request.getParameter("reactants");
         String products = request.getParameter("products");
+//        System.out.println(reactants + "-------" + products);
         String result = Balancer.getBalancedString(reactants, products);
         String equationInfo = new EquationInfoGetter(reactants, products).getEquationDetailDatas();
-        System.out.println(result + "\n" + result.indexOf("Something when wrong"));
+//        System.out.println(result + "\n" + result.indexOf("Something when wrong"));
         System.out.println(equationInfo);
         return "<h1>" + result + "</h1> \n" + ((result.indexOf("Something when wrong")!=-1) ? "" : equationInfo); 
     }
