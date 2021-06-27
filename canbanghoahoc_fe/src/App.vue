@@ -41,6 +41,8 @@ export default {
       let formDatas = new FormData();
       formDatas.append("reactants", this.fetchingStringReactant);
       formDatas.append("products", this.fetchingStringProduct);
+      /// THis variable is the FE domain, 
+      // it is sent to server so as to the server unblock the CORS with the domains
       formDatas.append("from_domain", browser_domain);
       fetch(backendURL + "balance", {
         body: formDatas,

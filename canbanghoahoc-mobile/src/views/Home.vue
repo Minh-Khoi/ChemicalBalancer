@@ -27,11 +27,10 @@
 </template>
 
 <script lang="ts">
-import ModalEquationVue from '@/components/ModalEquation.vue';
-import { IonContent, IonHeader, IonTitle, IonToolbar,IonButton,IonItem, modalController} from '@ionic/vue';
+import { IonContent, IonHeader, IonTitle, IonToolbar,IonButton, modalController} from '@ionic/vue';
 import { defineComponent } from 'vue';
 import Expression from "../components/Expression.vue";
-import {backendURL, device_url} from '../router/server_route';
+import {backendURL, deviceUrl} from '../router/server_route';
 import ModalEquation from '../components/ModalEquation.vue';
 
 export default defineComponent({
@@ -47,7 +46,7 @@ export default defineComponent({
     IonHeader,
     IonButton,
     IonTitle,
-    IonToolbar,IonItem,
+    IonToolbar,
     Expression
   },
   methods:{
@@ -61,12 +60,14 @@ export default defineComponent({
       }
     },
 
-        /** Send balancing request to server */
+    /** Send balancing request to server */
     async doBalance() {
-      let formDatas = new FormData();
+      const formDatas = new FormData();
       formDatas.append("reactants", this.fetchingStringReactant);
       formDatas.append("products", this.fetchingStringProduct);
-      formDatas.append("from_domain", device_url);
+      /// THis variable is the FE domain, 
+      // it is sent to server so as to the server unblock the CORS with the domains
+      formDatas.append("from_domain", deviceUrl);
       fetch(backendURL + "balance", {
         body: formDatas,
         method: "POST"
@@ -75,7 +76,7 @@ export default defineComponent({
         .then(async function (result) {
           result = result.replace(" fade ", "");
           // document.querySelector(".home .equation_info").innerHTML = result;
-          const new_mdl = await modalController.create({
+          const newMdl = await modalController.create({
             component: ModalEquation,
             cssClass: 'modal_compound_controller',
             componentProps: {
@@ -84,7 +85,7 @@ export default defineComponent({
             },
             swipeToClose: true,
           });
-          new_mdl.present();
+          newMdl.present();
         });
     }
   

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {backendURL} from '../router/server_route.ts';
+import {backendURL, deviceUrl} from '../router/server_route.ts';
 import ModalCompound from './ModalCompound.vue';
 import { IonButton, modalController } from '@ionic/vue';
 
@@ -65,7 +65,7 @@ export default {
   async mounted() {
     const formDatas = new FormData();
     formDatas.append("compoundFormula", this.details);
-    formDatas.append("from_domain", "http://localhost:7005");
+    formDatas.append("from_domain", deviceUrl);
     fetch(backendURL + "checkcompound", {
       body: formDatas,
       method: "POST"

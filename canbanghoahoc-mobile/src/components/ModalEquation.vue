@@ -13,7 +13,7 @@ export default {
   components:{IonItem},
   mounted(){
     document.querySelector(".modal_equation .equation_info").innerHTML = this.equationInfo;
-    document.querySelector(".modal_equation .equation_info a").display = none
+    document.querySelector(".modal_equation .equation_info a").style.display = "none"
   }
 }
 

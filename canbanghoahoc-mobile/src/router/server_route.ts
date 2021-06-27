@@ -1,2 +1,2 @@
 export const backendURL = "http://localhost:7007/CanBangHoaHoc/";
-export const device_url = "http://localhost:7005";
+export const deviceUrl = "http://localhost:7005";
